@@ -535,24 +535,29 @@ print("")
 print("Veicoli con revisione irregolare cui sono stati sottoposti a riparazione")
 for i in R_A_R_N:
      if (i._data[1].DescIntervento != None):
-          print(i._data[0].VIN+" "+str(i._data[1].Giorno)+" "+i._data[1].DescIntervento)
+          print(i._data[0].VIN+" "+str(i._data[1].Giorno)+"- Descrizione interveto eff.: "+i._data[1].DescIntervento)
      else:
           print(i._data[0].VIN+" "+str(i._data[1].Giorno)+" Descrizione non disponibile")
 print("")
-print("I centri revisioni che hanno effettuato ordini con quantità maggiore di 5 e prezzo superiore a 5€")
 
+
+print("I centri revisioni che hanno effettuato ordini con quantità maggiore di 5 e prezzo superiore a 5€")
 # I centri revisioni che hanno effettuato ordini con quantità maggiore di 5 e prezzo superiore a 5€.
 ORD_CR = session.query(Centrirevisioni, Ordine).filter(and_((Ordine.IdConcessione == Centrirevisioni.IdConcessione),
                                                              (Ordine.Quantità > 5),
                                                              (Ordine.Prezzo > 5.00))).all()
 for i in ORD_CR:
-     print(i._data[0].Nome+" Quantità: "+str(i._data[1].Quantità)+"; Prezzo: "+str(i._data[1].Prezzo)+\
-           "€; - "+i._data[1].Descrizione)
+     if (i._data[1].Descrizione != None):
+           print(i._data[0].Nome+" Quantità: "+str(i._data[1].Quantità)+"; Prezzo: "+str(i._data[1].Prezzo)+\
+               "€; -Descrizione Ordine eff.: "+i._data[1].Descrizione)
+     else:
+          print(i._data[0].Nome+" Quantità: "+str(i._data[1].Quantità)+"; Prezzo: "+str(i._data[1].Prezzo)+\
+               "€; -  Descrizione non disponibile")
 print("")
 
 
-print("I fornitori e i Centri Revisioni che hanno maggiormente venduto/speso in un singolo ordine.")
-# I fornitori e i Centri Revisioni che hanno maggiormente venduto/speso in un singolo ordine.
+print("I fornitori e i Centri Revisioni che hanno maggiormente venduto/speso nel un singolo ordine.")
+# I fornitori e i Centri Revisioni che hanno maggiormente venduto/speso nel singolo ordine.
 somma = session.query(func.sum(Ordine.Prezzo)).all()
 n_elementi = session.query(func.count(Ordine.Prezzo)).all()
 terzo_quartile = (somma[0][0]/n_elementi[0][0])*0.75
@@ -561,7 +566,7 @@ SPESA = session.query(Fornitori, Ordine, Centrirevisioni).filter(and_((Ordine.Pr
                                                                       (Centrirevisioni.IdConcessione == Ordine.IdConcessione),
                                                                       (Fornitori.IdFornitore == Ordine.IdFornitore) )).all()
 for i in SPESA:
-     print(i._data[0].Nome+" "+str(i._data[1].Prezzo)+"€; - "+i._data[2].Nome)
+     print("Fornitore: "+i._data[0].Nome+" <-> Prezzo "+str(i._data[1].Prezzo)+"€; <-> Acquirente: "+i._data[2].Nome)
 print("")
 
 print("Revisioni effettuate a veicoli con anno di immatricolazione superiore al 2010")
@@ -570,8 +575,8 @@ REV = session.query(Revisioni, Veicoli, Fabbricamodello).filter(and_((Revisioni.
                                                     (Veicoli.AnnoImmatricolazione > 2010),
                                                     (Veicoli.Modello == Fabbricamodello.Modello))).all()
 for i in REV:
-     print("Esito: "+i._data[0].Esito+", giorno: "+str(i._data[0].Giorno)+"; ---> TARGA: "+i._data[1].targa+"; Fabbrica: "+\
-          i._data[2].Fabbrica+"; Modello: "+i._data[2].Modello+"; Anno Imm.: "+str(i._data[1].AnnoImmatricolazione) )
+     print("Esito revisione: "+i._data[0].Esito+", effetuata il: "+str(i._data[0].Giorno)+"; ---> TARGA: "+i._data[1].targa+ \
+           "; Fabbrica: "+i._data[2].Fabbrica+"; Modello: "+i._data[2].Modello+"; Anno Imm.: "+str(i._data[1].AnnoImmatricolazione) )
 print("")
 
 
@@ -583,8 +588,8 @@ DIP = session.query(Meccanico, Centrirevisioni).filter(and_((Meccanico.IdConcess
                                                             (Meccanico.PagaOraria < float(8.00)),
                                                             (Meccanico.Ore < float(8.00)))).all()
 for i in DIP:
-     print("Nome: "+i._data[0].Nome+", Cognome: "+i._data[0].Cognome+", Specializzazione: "+i._data[0].Specializzazione+", Paga oraria: "\
-           +str(i._data[0].PagaOraria)+"€; ---> Centro: "+i._data[1].Nome)
+     print("Nome: "+i._data[0].Nome+", Cognome: "+i._data[0].Cognome+", Specializzazione: "+i._data[0].Specializzazione+\
+           ", Paga oraria: "+str(i._data[0].PagaOraria)+"€; ---> Centro: "+i._data[1].Nome)
 print("")
 
 
@@ -646,6 +651,7 @@ for i in VEI:
      print("")       
 print("")
 
+# Costruzione duplicati indirizzi
 row = [
           Numero(IdStrada = 1, Numero = 1),Numero(IdStrada = 1, Numero = 1),Numero(IdStrada = 1, Numero = 1),
           Numero(IdStrada = 1, Numero = 3),Numero(IdStrada = 1, Numero = 3),Numero(IdStrada = 1, Numero = 3),
