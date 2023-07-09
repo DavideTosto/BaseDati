@@ -39,7 +39,7 @@ def autoincrement():
           
 
 ### SET UP INIZIALE
-engine = create_engine('mysql+pymysql://root:D4v1d3@127.0.0.1:3306/dbcentrirevisioni',  isolation_level='READ COMMITTED') # READ COMMITTED, mysqlconnector ; AUTOCOMMIT,pymysql
+engine = create_engine('mysql+pymysql://root:D4v1d3@127.0.0.1:3306/dbcentrirevisioni',  isolation_level='READ COMMITTED') 
 #Ritorna l'oggetto di connessione
 conn = engine.connect()
 
@@ -274,239 +274,241 @@ Assistenzatecnica.centrirevisioni = relationship("Centrirevisioni", order_by=Cen
 
 Base.metadata.create_all(engine)
 
-# # Aggiungi Concessione e il nome del centro revisioni (singolarmente)
-# P1 = Protocolli(Tipo = 'CONCESSIONE', IdConcessione = 'TPAH0', Giorno = '2020-01-01', IdMCTC = 1)
-# P1.CentriRev = [Centrirevisioni(IdConcessione = 'TPAH0', Nome = 'CENTRO REVISIONI URSO E COSTA', IdNumeroCiv = 65546)]
-# session.add(P1)
-# trycommit()
+# Aggiungi Concessione e il nome del centro revisioni (singolarmente)
+P1 = Protocolli(Tipo = 'CONCESSIONE', IdConcessione = 'TPAH0', Giorno = '2020-01-01', IdMCTC = 1)
+P1.CentriRev = [Centrirevisioni(IdConcessione = 'TPAH0', Nome = 'CENTRO REVISIONI URSO E COSTA', IdNumeroCiv = 65546)]
+session.add(P1)
+trycommit()
 
-# P1 = Protocolli(Tipo = 'CONCESSIONE', IdConcessione = 'TPAD8', Giorno = '2020-01-01', IdMCTC = 1)
-# P1.CentriRev =[Centrirevisioni(IdConcessione = 'TPAD8', Nome = 'ROCCO AIUTO', IdNumeroCiv = 65546)]
-# session.add(P1)
-# trycommit()
+P1 = Protocolli(Tipo = 'CONCESSIONE', IdConcessione = 'TPAD8', Giorno = '2020-01-01', IdMCTC = 1)
+P1.CentriRev =[Centrirevisioni(IdConcessione = 'TPAD8', Nome = 'ROCCO AIUTO', IdNumeroCiv = 65546)]
+session.add(P1)
+trycommit()
 
-# #Aggiungi Concessione e il nome del centro revisioni (insieme)
-# rows = [
-#      Protocolli(Tipo = 'CONCESSIONE', IdConcessione = 'CTAF1', Giorno = '2014-02-06', IdMCTC = 2,
-#                 CentriRev = [Centrirevisioni(IdConcessione = 'CTAF1', Nome = 'CRUSL', IdNumeroCiv = 57)]),  
-#      Protocolli(Tipo = 'CONCESSIONE', IdConcessione = 'CTIC5', Giorno = '2002-02-02', IdMCTC = 2, 
-#                 CentriRev = [Centrirevisioni(IdConcessione = 'CTIC5', Nome = 'SBUCAB', IdNumeroCiv = 69)]),
-#  ]
-# session.add_all(rows)
-# trycommit()
+#Aggiungi Concessione e il nome del centro revisioni (insieme)
+rows = [
+     Protocolli(Tipo = 'CONCESSIONE', IdConcessione = 'CTAF1', Giorno = '2014-02-06', IdMCTC = 2,
+                CentriRev = [Centrirevisioni(IdConcessione = 'CTAF1', Nome = 'CRUSL', IdNumeroCiv = 57)]),  
+     Protocolli(Tipo = 'CONCESSIONE', IdConcessione = 'CTIC5', Giorno = '2002-02-02', IdMCTC = 2, 
+                CentriRev = [Centrirevisioni(IdConcessione = 'CTIC5', Nome = 'SBUCAB', IdNumeroCiv = 69)]),
+ ]
+session.add_all(rows)
+trycommit()
 
-# # Eliminare tuple dalla tabella Assistenza Tecnica in base al valore della chiave primaria
-# query = session.query(Assistenzatecnica).filter(Assistenzatecnica.IdAssistenza == 1)
-# data = query.all()
-# print(data)
-# for item in range(len(data)):
-#             session.delete(data[item])
-# trycommit()
+# Eliminare tuple dalla tabella Assistenza Tecnica in base al valore della chiave primaria
+query = session.query(Assistenzatecnica).filter(Assistenzatecnica.IdAssistenza == 1)
+data = query.all()
+print(data)
+for item in range(len(data)):
+            session.delete(data[item])
+trycommit()
 
-# # Aggiumta una nuova tupla nella tabella Assistenza Tecnica
-# A1 = Assistenzatecnica(IdAssistenza = 1 , Nome="TECNOSERVICE",IdNumeroCiv="65543", telefono='345621302' )
-# session.add(A1)
-# trycommit()
+# Aggiumta una nuova tupla nella tabella Assistenza Tecnica
+A1 = Assistenzatecnica(IdAssistenza = 1 , Nome="TECNOSERVICE",IdNumeroCiv="65543", telefono='345621302' )
+session.add(A1)
+trycommit()
 
-# # inserisce nuove tuple in nella tabella Motorizzazione
-# M1 = Motorizzazione(IdMCTC =6, Nome = 'MCTC DI ROMA', telefono = '3109544632')
-# # usa la relazione Protocolli per aggiungere delle tuple nella tabella Protocolli
-# M1.atti = [Protocolli(Tipo = 'CONCESSIONE', IdConcessione = 'RMSH2', Giorno = '2023-05-01', IdMCTC = 6)]
-# # usa la relazione CentriRev per aggiungere delle tuple nella tabella Centrirevisioni
-# M1.atti[0].CentriRev = [Centrirevisioni(IdConcessione = 'RMSH2', Nome = 'E MOJRREV', IdNumeroCiv = 1742)]
-# session.add(M1)
-# trycommit() # fino a qua ok
+# inserisce nuove tuple in nella tabella Motorizzazione
+M1 = Motorizzazione(IdMCTC =6, Nome = 'MCTC DI ROMA', telefono = '3109544632')
+# usa la relazione Protocolli per aggiungere delle tuple nella tabella Protocolli
+M1.atti = [Protocolli(Tipo = 'CONCESSIONE', IdConcessione = 'RMSH2', Giorno = '2023-05-01', IdMCTC = 6)]
+# usa la relazione CentriRev per aggiungere delle tuple nella tabella Centrirevisioni
+M1.atti[0].CentriRev = [Centrirevisioni(IdConcessione = 'RMSH2', Nome = 'E MOJRREV', IdNumeroCiv = 1742)]
+session.add(M1)
+trycommit() 
 
-# # IN_OGG_rel = inserimento oggetti in relazione
-# # IN_OGG_rel: inseriti i dati in Protocolli inserisce i dati in ispettori
-# AUT1 = Protocolli(Tipo = 'AUTORIZZAZIONE', IdIspettore='9', Giorno = '1987-07-06', IdMCTC = 3)
-# AUT1.ispettori = [Ispettore(IdIspettore = 9, Nome = 'Davide', Cognome = 'Tosto')]
-# session.add(AUT1)
-# trycommit() 
+# IN_OGG_rel = inserimento oggetti in relazione
+# IN_OGG_rel: inseriti i dati in Protocolli inserisce i dati in ispettori
+AUT1 = Protocolli(Tipo = 'AUTORIZZAZIONE', IdIspettore='9', Giorno = '1987-07-06', IdMCTC = 3)
+AUT1.ispettori = [Ispettore(IdIspettore = 9, Nome = 'Davide', Cognome = 'Tosto')]
+session.add(AUT1)
+trycommit() 
 
-# # Inseriti i dati in Revisioni 
-# REV = Revisioni(IdIspettore = 9, Esito='POSITIVO', Prezzo=66.88, Giorno='2020-03-04', VIN='WVWZZZ1KZAP056080' )
-# session.add(REV)
-# trycommit() 
+# Inseriti i dati in Revisioni 
+REV = Revisioni(IdIspettore = 9, Esito='POSITIVO', Prezzo=66.88, Giorno='2020-03-04', VIN='WVWZZZ1KZAP056080' )
+session.add(REV)
+trycommit() 
 
-# # IN_OGG_rel: inseriti i dati in Veicoli inserisce i dati in Revisioni
-# VEI = Veicoli(VIN='ZFA19900046832155', targa='AB123CD', Modello='PUNTO', AnnoImmatricolazione=2010, CodiceFiscale='TSTDVD96E01D423P')
-# VEI.revisioni = [Revisioni(IdIspettore = 9, Esito='POSITIVO', Prezzo=66.88, Giorno='1998-03-04', VIN='ZFA19900046832155'),
-#                  Revisioni(IdIspettore = 9, Esito='POSITIVO', Prezzo=66.88, Giorno='2000-03-04', VIN='ZFA19900046832155'),
-#                  Revisioni(IdIspettore = 9, Esito='POSITIVO', Prezzo=66.88, Giorno='2002-03-04', VIN='ZFA19900046832155'),
-#                  Revisioni(IdIspettore = 9, Esito='POSITIVO', Prezzo=66.88, Giorno='2004-03-04', VIN='ZFA19900046832155')]
-# session.add(VEI)
-# trycommit()
+# IN_OGG_rel: inseriti i dati in Veicoli inserisce i dati in Revisioni
+VEI = Veicoli(VIN='ZFA19900046832155', targa='AB123CD', Modello='PUNTO', AnnoImmatricolazione=2010, CodiceFiscale='TSTDVD96E01D423P')
+VEI.revisioni = [Revisioni(IdIspettore = 9, Esito='POSITIVO', Prezzo=66.88, Giorno='1998-03-04', VIN='ZFA19900046832155'),
+                 Revisioni(IdIspettore = 9, Esito='POSITIVO', Prezzo=66.88, Giorno='2000-03-04', VIN='ZFA19900046832155'),
+                 Revisioni(IdIspettore = 9, Esito='POSITIVO', Prezzo=66.88, Giorno='2002-03-04', VIN='ZFA19900046832155'),
+                 Revisioni(IdIspettore = 9, Esito='POSITIVO', Prezzo=66.88, Giorno='2004-03-04', VIN='ZFA19900046832155')]
+session.add(VEI)
+trycommit()
 
-# # IN_OGG_rel: inseriti i dati in Proprietario inserisce i dati in Veicoli
-# PROP = Proprietario(CodiceFiscale='MNNPRC93E41E310W', Nome='PATRICIA ALEJANDRA', Cognome='MONNO')
-# PROP.proprieta = [Veicoli(VIN='ZFA19900014532689', targa='EF456GH', Modello='PUNTO', AnnoImmatricolazione=2000, CodiceFiscale='MNNPRC93E41E310W'),
-#                   Veicoli(VIN='ZFA19900028534961', targa='IL789MN', Modello='PUNTO', AnnoImmatricolazione=1997, CodiceFiscale='MNNPRC93E41E310W'),
-#                   Veicoli(VIN='ZFA19900064579135', targa='OP101QR', Modello='PUNTO', AnnoImmatricolazione=2002, CodiceFiscale='MNNPRC93E41E310W'),
-#                   Veicoli(VIN='ZFA19900067358201', targa='US112TU', Modello='PUNTO', AnnoImmatricolazione=2004, CodiceFiscale='MNNPRC93E41E310W')]
-# session.add(PROP)
-# trycommit()
+# IN_OGG_rel: inseriti i dati in Proprietario inserisce i dati in Veicoli
+PROP = Proprietario(CodiceFiscale='MNNPRC93E41E310W', Nome='PATRICIA ALEJANDRA', Cognome='MONNO')
+PROP.proprieta = [Veicoli(VIN='ZFA19900014532689', targa='EF456GH', Modello='PUNTO', AnnoImmatricolazione=2000, CodiceFiscale='MNNPRC93E41E310W'),
+                  Veicoli(VIN='ZFA19900028534961', targa='IL789MN', Modello='PUNTO', AnnoImmatricolazione=1997, CodiceFiscale='MNNPRC93E41E310W'),
+                  Veicoli(VIN='ZFA19900064579135', targa='OP101QR', Modello='PUNTO', AnnoImmatricolazione=2002, CodiceFiscale='MNNPRC93E41E310W'),
+                  Veicoli(VIN='ZFA19900067358201', targa='US112TU', Modello='PUNTO', AnnoImmatricolazione=2004, CodiceFiscale='MNNPRC93E41E310W')]
+session.add(PROP)
+trycommit()
 
-# # IN_OGG_rel: inseriti i dati in Veicoli inserisce i dati in Proprietario
-# VEI = Veicoli(VIN='ZFA19900012409860', targa='AZ195BY', Modello='PUNTO', AnnoImmatricolazione=1998, CodiceFiscale='GRSDLD39S01I925W')
-# VEI.proprietario = Proprietario(CodiceFiscale='GRSDLD39S01I925W', Nome='DANILO DOMENICO', Cognome='GROSHEV')
-# session.add(VEI)
-# trycommit()
+# IN_OGG_rel: inseriti i dati in Veicoli inserisce i dati in Proprietario
+VEI = Veicoli(VIN='ZFA19900012409860', targa='AZ195BY', Modello='PUNTO', AnnoImmatricolazione=1998, CodiceFiscale='GRSDLD39S01I925W')
+VEI.proprietario = Proprietario(CodiceFiscale='GRSDLD39S01I925W', Nome='DANILO DOMENICO', Cognome='GROSHEV')
+session.add(VEI)
+trycommit()
 
-# # IN_OGG_rel: inseriti i dati in Foritori inserisce i dati in Ordine
-# FOR = Fornitori(Nome = 'LAUTOR', Telefono = '3279465130')
-# FOR.fornisce = [ Ordine( Quantità = 10, Prezzo = 0.20, Descrizione = 'Guarnizioni in Gomma', IdFornitore = 1),
-#                  Ordine( Quantità = 1, Prezzo = 10.40, Descrizione = 'Filtro olio', IdFornitore = 3),]
-# session.add(FOR)
-# trycommit()
+# IN_OGG_rel: inseriti i dati in Foritori inserisce i dati in Ordine
+FOR = Fornitori(Nome = 'LAUTOR', Telefono = '3279465130')
+FOR.fornisce = [ Ordine( Quantità = 10, Prezzo = 0.20, Descrizione = 'Guarnizioni in Gomma', IdFornitore = 1),
+                 Ordine( Quantità = 1, Prezzo = 10.40, Descrizione = 'Filtro olio', IdFornitore = 3),]
+session.add(FOR)
+trycommit()
 
-# # IN_OGG_rel: esegita la query su Protocolli inserisce i dati in Ordine
-# # Ad ogni IdConcessione in Protocolli corrisponde un solo centro revisoni
-# # dunque tramite questa query riusciamo a inserire nel centro revisioni corrispondente
-# # i ordini da effettuare
-# AZD = session.query(Protocolli).filter(Protocolli.IdConcessione == 'TPAH0').first()
-# AZD.richiede = [Ordine( Quantità = 10, Prezzo = 0.20, Descrizione = 'Guarnizioni in Gomma', IdFornitore = 1)]
-# session.add(AZD)
-# trycommit()
+# IN_OGG_rel: esegita la query su Protocolli inserisce i dati in Ordine
+# Ad ogni IdConcessione in Protocolli corrisponde un solo centro revisoni
+# dunque tramite questa query riusciamo a inserire nel centro revisioni corrispondente
+# i ordini da effettuare
+AZD = session.query(Protocolli).filter(Protocolli.IdConcessione == 'TPAH0').first()
+AZD.richiede = [Ordine( Quantità = 10, Prezzo = 0.20, Descrizione = 'Guarnizioni in Gomma', IdFornitore = 1)]
+session.add(AZD)
+trycommit()
 
-# # IN_OGG_rel: inseriti i dati in Ordine inserisce i dati del richiedente (CentroRevisioni = Protocolli(IdConcessione))
-# # e del fornitore
-# rows = [
-#      Ordine( Quantità = 5, Prezzo = 20.5, Descrizione = 'Biellette', 
-#              fornito = Fornitori(Nome = 'RicambA', Telefono = '3579461382'),
-#              richiesto =(session.query(Protocolli).filter(Protocolli.IdConcessione == 'TPAH0').first()))
-# ]
-# session.add_all(rows)
-# trycommit()
+# IN_OGG_rel: inseriti i dati in Ordine inserisce i dati del richiedente (CentroRevisioni = Protocolli(IdConcessione))
+# e del fornitore
+rows = [
+     Ordine( Quantità = 5, Prezzo = 20.5, Descrizione = 'Biellette', 
+             fornito = Fornitori(Nome = 'RicambA', Telefono = '3579461382'),
+             richiesto =(session.query(Protocolli).filter(Protocolli.IdConcessione == 'TPAH0').first()))
+]
+session.add_all(rows)
+trycommit()
 
-# # IN_OGG_rel: eseugita la query su Meccanico inserisce i dati in Centrirevisioni
-# MEC = session.query(Meccanico).filter(Meccanico.IdCollaboratore == 1).first()
-# MEC.centro = Centrirevisioni( concessione=Protocolli(IdConcessione = 'TPAB6', Giorno = '1993-06-12', IdMCTC = 1, Tipo = 'CONCESSIONE'),
-#                               Nome = 'MAIORANA', IdNumeroCiv = 567)
-# session.add(MEC)
-# trycommit()
+# IN_OGG_rel: eseugita la query su Meccanico inserisce i dati in Centrirevisioni
+MEC = session.query(Meccanico).filter(Meccanico.IdCollaboratore == 1).first()
+MEC.centro = Centrirevisioni( concessione=Protocolli(IdConcessione = 'TPAB6', Giorno = '1993-06-12', IdMCTC = 1, Tipo = 'CONCESSIONE'),
+                              Nome = 'MAIORANA', IdNumeroCiv = 567)
+session.add(MEC)
+trycommit()
 
-# # Inserisce i dati in Meccanico
-# row = [
-#      Meccanico( Nome = 'Silvio', Cognome = 'Bono', Specializzazione = 'Elettrauto', Ore=8, PagaOraria=10.5, IdConcessione='TPAB6'),
-#      Meccanico( Nome = 'Filippo', Cognome = 'Campo', Specializzazione = 'Lattoniere', Ore=7, PagaOraria=7.5, IdConcessione='TPAD8'),
-#      Meccanico( Nome = 'Giovanni', Cognome = 'Cavallaro', Specializzazione = 'Meccanico', Ore=8, PagaOraria=9.5, IdConcessione='TPAI6'),
-#      Meccanico( Nome = 'Giuseppe', Cognome = 'Renda', Specializzazione = 'Elettrauto', Ore=11, PagaOraria=11.5, IdConcessione='CTAF1')
-# ]
-# session.add_all(row)
-# trycommit()
+# Inserisce i dati in Meccanico
+row = [
+     Meccanico( Nome = 'Silvio', Cognome = 'Bono', Specializzazione = 'Elettrauto', Ore=8, PagaOraria=10.5, IdConcessione='TPAB6'),
+     Meccanico( Nome = 'Filippo', Cognome = 'Campo', Specializzazione = 'Lattoniere', Ore=7, PagaOraria=7.5, IdConcessione='TPAD8'),
+     Meccanico( Nome = 'Giovanni', Cognome = 'Cavallaro', Specializzazione = 'Meccanico', Ore=8, PagaOraria=9.5, IdConcessione='TPAI6'),
+     Meccanico( Nome = 'Giuseppe', Cognome = 'Renda', Specializzazione = 'Elettrauto', Ore=11, PagaOraria=11.5, IdConcessione='CTAF1')
+]
+session.add_all(row)
+trycommit()
 
-# # La seguente query su Fabbricamodello restituisce tutti i modelli di auto prodotti dalla FIAT
-# # e li stampa a video
-# FAB = session.query(Fabbricamodello).filter(Fabbricamodello.Fabbrica == 'FIAT').all()
-# for i in FAB:
-#     print((i.Fabbrica)+" "+(i.Modello))
+# La seguente query su Fabbricamodello restituisce tutti i modelli di auto prodotti dalla FIAT
+# e li stampa a video
+FAB = session.query(Fabbricamodello).filter(Fabbricamodello.Fabbrica == 'FIAT').all()
+for i in FAB:
+    print((i.Fabbrica)+" "+(i.Modello))
 
-# # La seguente query restituisce le Riparazioni effettuate su auto FIAT
-# # e le stampa a video
-# RIP = session.query(Fabbricamodello, Veicoli, Ripara).filter(and_(
-#      (Fabbricamodello.Modello == Veicoli.Modello),
-#      (Fabbricamodello.Fabbrica == "FIAT"),
-#      (Veicoli.VIN == Ripara.VIN))).all()
-# for i in RIP:
-#      if (i._data[2].DescIntervento != None):
-#           print(i._data[1].Modello+" "+i._data[1].VIN+" "+i._data[2].DescIntervento)
-#      else:
-#           print(i._data[1].Modello+" "+i._data[1].VIN+" Descrizione non disponibile")
+# La seguente query restituisce le Riparazioni effettuate su auto FIAT
+# e le stampa a video
+RIP = session.query(Fabbricamodello, Veicoli, Ripara).filter(and_(
+     (Fabbricamodello.Modello == Veicoli.Modello),
+     (Fabbricamodello.Fabbrica == "FIAT"),
+     (Veicoli.VIN == Ripara.VIN))).all()
+for i in RIP:
+     if (i._data[2].DescIntervento != None):
+          print(i._data[1].Modello+" "+i._data[1].VIN+" "+i._data[2].DescIntervento)
+     else:
+          print(i._data[1].Modello+" "+i._data[1].VIN+" Descrizione non disponibile")
 
-# # Crea un nuovo comune, una nuova provincia e una nuova regione
-# COM = [   Regione(prov = 'AL', Regione = 'ABBIA'), 
-#           Prov(Comune= 'ABIANTO', prov = 'AL', Provincia = 'ALIFORNIA'), 
-#           Comune(Comune = 'ABIANGO', CAP = 10002) ]
-# session.add_all(COM)
-# trycommit()
+# Crea un nuovo comune, una nuova provincia e una nuova regione
+COM = [   Regione(prov = 'AL', Regione = 'ABBIA'), 
+          Prov(Comune= 'ABIANTO', prov = 'AL', Provincia = 'ALIFORNIA'), 
+          Comune(Comune = 'ABIANGO', CAP = 10002) ]
+session.add_all(COM)
+trycommit()
 
-# # IN_OGG_rel: Aggiunta di nuove tuple in Numero(civico), Strada, Comune, Prov e Regione
-# NEW = Regione(Regione = 'ZIGNA', prov = 'ZZ',
-#           provincia= [Prov(Comune= 'ZONDRIO', prov = 'ZZ', Provincia = 'ZANZIA', 
-#                             comune = Comune(Comune = 'ZONDRIO', CAP = 10002,
-#                                             strada = [Strada(NomeStrada = "Via Corte dei Conti", IdStrada = autoincrement(),
-#                                                       civico = [Numero( Numero = 1, IdStrada = autoincrement() )] )],
-#                             ))], )
-# session.add(NEW)
-# trycommit()
+# IN_OGG_rel: Aggiunta di nuove tuple in Numero(civico), Strada, Comune, Prov e Regione
+NEW = Regione(Regione = 'ZIGNA', prov = 'ZZ',
+          provincia= [Prov(Comune= 'ZONDRIO', prov = 'ZZ', Provincia = 'ZANZIA', 
+                            comune = Comune(Comune = 'ZONDRIO', CAP = 10002,
+                                            strada = [Strada(NomeStrada = "Via Corte dei Conti", IdStrada = autoincrement(),
+                                                      civico = [Numero( Numero = 1, IdStrada = autoincrement() )] )],
+                            ))], )
+session.add(NEW)
+trycommit()
 
-# # La seguente query restituisce il comune, la provincia e la regione di ZONDRIO
-# query = session.query(Comune, Prov, Regione).filter(and_(
-#      (Comune.Comune == Prov.Comune),
-#      (Prov.prov == Regione.prov),
-#      (Comune.Comune == 'ZONDRIO'))).all()
-# for i in query:
-#      print("Comune: "+i._data[0].Comune+" - Provincia: "+i._data[1].prov+" - Regione: "+i._data[2].Regione)
+# La seguente query restituisce il comune, la provincia e la regione di ZONDRIO
+query = session.query(Comune, Prov, Regione).filter(and_(
+     (Comune.Comune == Prov.Comune),
+     (Prov.prov == Regione.prov),
+     (Comune.Comune == 'ZONDRIO'))).all()
+for i in query:
+     print("Comune: "+i._data[0].Comune+" - Provincia: "+i._data[1].prov+" - Regione: "+i._data[2].Regione)
 
-# # Aggiunta di dei record indicanti l'indirzzo in AssistenzaTecnica(IN MODO CASUALE)
-# for i in session.query(Assistenzatecnica).all():
-#      if (i.IdNumeroCiv == None):
-#           i.IdNumeroCiv = random.randint(1, 65000)
-#           session.add(i)
-#           trycommit()
+# Aggiunta di dei record indicanti l'indirzzo in AssistenzaTecnica(IN MODO CASUALE)
+for i in session.query(Assistenzatecnica).all():
+     if (i.IdNumeroCiv == None):
+          i.IdNumeroCiv = random.randint(1, 65000)
+          session.add(i)
+          trycommit()
 
-# ################# Aggiunta di oggetti in relazione da:
+################# Aggiunta di oggetti in relazione da:
 
-# # Assistenza Tecnica aggiungo un nuovo indirizzo
-# STR = session.query(Strada).filter(Strada.NomeStrada == "Via Corte dei Conti").first()
-# ASS = Assistenzatecnica( Nome="Ravaglioli", telefono="3216547895", 
-#                          civico = Numero ( IdStrada=STR.IdStrada, Numero=2 ) )
-# session.add(ASS)
-# trycommit()
+# Assistenza Tecnica aggiungo un nuovo indirizzo
+STR = session.query(Strada).filter(Strada.NomeStrada == "Via Corte dei Conti").first()
+ASS = Assistenzatecnica( Nome="Ravaglioli", telefono="3216547895", 
+                         civico = Numero ( IdStrada=STR.IdStrada, Numero=2 ) )
+session.add(ASS)
+trycommit()
 
-# # Protocolli ( Centri revisioni o Ispettore ) aggiungo un nuovo indirizzo
-# STR = session.query(Strada).filter(Strada.NomeStrada == "Via Corte dei Conti").first()
-# C1 = Protocolli(Tipo = 'CONCESSIONE', IdConcessione = 'CTAF2', Giorno = '2021-07-05', IdMCTC = 2)
-# C1.CentriRev =[Centrirevisioni(IdConcessione = 'CTAF2', Nome = 'SBUCAB', 
-#                                civico = Numero ( IdStrada=STR.IdStrada, Numero=rndciv() ))]
-# session.add(C1)
-# trycommit()
+# Protocolli ( Centri revisioni o Ispettore ) aggiungo un nuovo indirizzo
+STR = session.query(Strada).filter(Strada.NomeStrada == "Via Corte dei Conti").first()
+C1 = Protocolli(Tipo = 'CONCESSIONE', IdConcessione = 'CTAF2', Giorno = '2021-07-05', IdMCTC = 2)
+C1.CentriRev =[Centrirevisioni(IdConcessione = 'CTAF2', Nome = 'SBUCAB', 
+                               civico = Numero ( IdStrada=STR.IdStrada, Numero=rndciv() ))]
+session.add(C1)
+trycommit()
 
-# # Fornitori aggiungo un nuovo indirizzo
-# STR = session.query(Strada).filter(Strada.NomeStrada == "VIA TRIESTE").first()
-# CFR  = Fornitori(Nome = 'UTOROTU', Telefono = '3461200258',
-#                     civico = Numero ( IdStrada=STR.IdStrada, Numero=rndciv() ))
-# session.add(CFR)
-# trycommit()
+# Fornitori aggiungo un nuovo indirizzo
+STR = session.query(Strada).filter(Strada.NomeStrada == "VIA TRIESTE").first()
+CFR  = Fornitori(Nome = 'UTOROTU', Telefono = '3461200258',
+                    civico = Numero ( IdStrada=STR.IdStrada, Numero=rndciv() ))
+session.add(CFR)
+trycommit()
 
-# #  Veicoli aggiungo un Proprietario che a sua volta aggiunge un nuovo indirizzo
-# STR = session.query(Strada, Comune).filter(and_(Strada.NomeStrada == "VIA DELLA RESISTENZA"),
-#                                              (Comune.Comune == "FALERONE")).first()
-# VEI = Veicoli(VIN='ZFA19900056321489', targa='DF111FD', Modello='PUNTO', AnnoImmatricolazione=2006, 
-#               proprietario = Proprietario(CodiceFiscale='DRNLRT19L01F126N', Nome='ALBERT AZUAYI', Cognome='DI RENDE', 
-#                                 civico = Numero ( IdStrada=STR._data[0].IdStrada, Numero=rndciv())))
-# session.add(VEI)
-# trycommit()
+#  Veicoli aggiungo un Proprietario che a sua volta aggiunge un nuovo indirizzo
+STR = session.query(Strada, Comune).filter(and_(Strada.NomeStrada == "VIA DELLA RESISTENZA"),
+                                             (Comune.Comune == "FALERONE")).first()
+VEI = Veicoli(VIN='ZFA19900056321489', targa='DF111FD', Modello='PUNTO', AnnoImmatricolazione=2006, 
+              proprietario = Proprietario(CodiceFiscale='DRNLRT19L01F126N', Nome='ALBERT AZUAYI', Cognome='DI RENDE', 
+                                civico = Numero ( IdStrada=STR._data[0].IdStrada, Numero=rndciv())))
+session.add(VEI)
+trycommit()
 
-# # Motorizzazione aggiungo un nuovo indirizzo
-# STR =  session.query(Strada, Comune).filter(and_(Strada.NomeStrada == "VIA DIOCLEZIANO"),
-#                                               (Comune.Comune == "NAPOLI")).first()
-# M1 = Motorizzazione( Nome = 'MCTC DI NAPOLI', telefono = '3894560011',
-#                      civico = Numero ( IdStrada=STR._data[0].IdStrada, Numero=rndciv()))      
-# session.add(M1)
-# trycommit()
+# Motorizzazione aggiungo un nuovo indirizzo
+STR =  session.query(Strada, Comune).filter(and_(Strada.NomeStrada == "VIA DIOCLEZIANO"),
+                                              (Comune.Comune == "NAPOLI")).first()
+M1 = Motorizzazione( Nome = 'MCTC DI NAPOLI', telefono = '3894560011',
+                     civico = Numero ( IdStrada=STR._data[0].IdStrada, Numero=rndciv()))      
+session.add(M1)
+trycommit()
 
-# # Update riga
-# session.query(Comune).filter(Comune.Comune == 'ZONDRIO').update({Comune.Comune: 'ZURICO'})
-# session.query(Comune).filter(Comune.Comune == 'ZURICO').update({Comune.Comune: 'ZONDRIO'})
-# session.query(Veicoli).filter(Veicoli.VIN == 'ZFA19900056321489').update({Veicoli.VIN: 'ZFA19900056321490', Veicoli.Modello: 'YPSILON', Veicoli.AnnoImmatricolazione: 2007})
-# session.query(Revisioni).filter(Revisioni.IdRevisione == 1).update({Revisioni.Esito: 'REGOLARE'})
-# session.query(Ispettore).filter(Ispettore.IdIspettore == 2).update({Ispettore.Nome: 'GIOVANNI', Ispettore.Cognome: 'ROSSI'})
-# session.query(Protocolli).filter(Protocolli.IdProtocolli == 2).update({Protocolli.IdMCTC: 2})
-# session.query(Fornitori).filter(Fornitori.IdFornitore == 2).update({Fornitori.Telefono: '3461200268'})
-# session.query(Assistenzatecnica).filter(Assistenzatecnica.IdAssistenza == 2).update({Assistenzatecnica.Nome: 'Ravaglioli', Assistenzatecnica.telefono: '3216547795'})
-# trycommit()
-
-
+# Update riga
+session.query(Comune).filter(Comune.Comune == 'ZONDRIO').update({Comune.Comune: 'ZURICO'})
+session.query(Comune).filter(Comune.Comune == 'ZURICO').update({Comune.Comune: 'ZONDRIO'})
+session.query(Veicoli).filter(Veicoli.VIN == 'ZFA19900056321489').update({Veicoli.VIN: 'ZFA19900056321490', Veicoli.Modello: 'YPSILON', Veicoli.AnnoImmatricolazione: 2007})
+session.query(Revisioni).filter(Revisioni.IdRevisione == 1).update({Revisioni.Esito: 'REGOLARE'})
+session.query(Ispettore).filter(Ispettore.IdIspettore == 2).update({Ispettore.Nome: 'GIOVANNI', Ispettore.Cognome: 'ROSSI'})
+session.query(Protocolli).filter(Protocolli.IdProtocolli == 2).update({Protocolli.IdMCTC: 2})
+session.query(Fornitori).filter(Fornitori.IdFornitore == 2).update({Fornitori.Telefono: '3461200268'})
+session.query(Assistenzatecnica).filter(Assistenzatecnica.IdAssistenza == 2).update({Assistenzatecnica.Nome: 'Ravaglioli', Assistenzatecnica.telefono: '3216547795'})
+trycommit()
 
 
-# #elimina riga
-# query = session.query(Comune).filter( and_ (Comune.CAP == '10002', Comune.Comune == 'ZONDRIO'))
-# data = query.all()
-# for item in range(len(data)):
-#             session.delete(data[item])
-#             print(data[item].Comune)
+
+
+#elimina riga
+query = session.query(Comune).filter( and_ (Comune.CAP == '10002', Comune.Comune == 'ZONDRIO'))
+data = query.all()
+for item in range(len(data)):
+            session.delete(data[item])
+            print(data[item].Comune)
+
+######################################## Query ########################################
 
 # Crea prima query semplice
 query = session.query(Comune,).filter(Comune.Comune == 'PACECO')
