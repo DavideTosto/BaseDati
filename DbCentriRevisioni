@@ -1,4 +1,12 @@
 #
+# installare modulo interfaccia Db in mysql
+# curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+# python get-pip.py
+# pip install mysql-connector-python
+# pip install pymysql  
+# pip install sqlalchemy
+# pip install pandas
+# import mysql.connector
 # 
 # python -m venv BaseDati
 ### FASE IMPORT
