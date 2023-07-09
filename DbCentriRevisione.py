@@ -508,7 +508,7 @@ for item in range(len(data)):
             session.delete(data[item])
             print(data[item].Comune)
 
-######################################## Query ########################################
+######################################## !!!!!! Query !!!!!! ########################################
 
 # Crea prima query semplice
 query = session.query(Comune,).filter(Comune.Comune == 'PACECO')
