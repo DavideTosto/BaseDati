@@ -1,4 +1,14 @@
 #
+# installare modulo interfaccia Db in mysql
+# curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+# python get-pip.py
+# pip install mysql-connector-python
+# pip install pymysql  
+# pip install sqlalchemy
+# pip install pandas
+# import mysql.connector
+#
+#
 ### FASE IMPORT
 #
 #
@@ -508,7 +518,7 @@ for item in range(len(data)):
             session.delete(data[item])
             print(data[item].Comune)
 
-######################################## !!!!!! Query !!!!!! ########################################
+######################################## Query ########################################
 
 # Crea prima query semplice
 query = session.query(Comune,).filter(Comune.Comune == 'PACECO')
